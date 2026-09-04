@@ -1,0 +1,835 @@
+/* Tailwind CSS 指令 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark Spectral Technology theme tokens and shared UI primitives. */
+
+:root {
+  color-scheme: dark;
+  --bg-app: #06171f;
+  --bg-sidebar: #101e26;
+  --bg-sidebar-deep: #0b171d;
+  --surface-primary: #12262a;
+  --surface-secondary: #193337;
+  --surface-hover: #1d393d;
+  --surface-raised: #071418;
+  --border-subtle: rgba(99, 232, 221, 0.1);
+  --border-active: rgba(99, 232, 221, 0.25);
+  --text-primary: #e3eeee;
+  --text-secondary: #91a7a7;
+  --text-muted: #869e9e;
+  --accent: #20d0ca;
+  --accent-bright: #63e8dd;
+  --accent-soft: #16a89f;
+  --accent-wash: rgba(32, 208, 202, 0.08);
+  --action-primary: #63d8d2;
+  --action-primary-hover: #76e1db;
+  --status-success: #55b89c;
+  --status-warning: #c8a25c;
+  --status-danger: #c66a52;
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+button,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+/* Shared card surface. The legacy class name remains for compatibility. */
+.ios-card {
+  background: var(--surface-primary);
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ios-card:hover {
+  border-color: var(--border-active);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+/* Shared dark input surface. */
+.ios-input {
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-subtle);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.ios-input:focus {
+  background: var(--surface-primary);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(32, 208, 202, 0.16);
+  outline: none;
+}
+
+.ios-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* Primary action. The class name remains for existing screens. */
+.ios-btn-primary {
+  background: var(--action-primary);
+  color: #07171f;
+  font-weight: 700;
+  border: none;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.ios-btn-primary:hover:not(:disabled) {
+  background: var(--action-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 0 18px rgba(32, 208, 202, 0.08);
+}
+
+.ios-btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(32, 208, 202, 0.1);
+}
+
+.ios-btn-primary:disabled {
+  background: var(--surface-secondary);
+  color: var(--text-muted);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* Secondary and destructive actions. */
+.ios-btn-secondary {
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+  font-weight: 600;
+  border: 1px solid var(--border-subtle);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.ios-btn-secondary:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-active);
+}
+
+/* 危险按钮 */
+.ios-btn-danger {
+  background: rgba(198, 106, 82, 0.12);
+  color: var(--status-danger);
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.ios-btn-danger:hover {
+  background: rgba(198, 106, 82, 0.2);
+  border-color: rgba(198, 106, 82, 0.3);
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(145, 167, 167, 0.22);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 232, 221, 0.35);
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: center;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes aiCoreOrbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes aiCoreOnline {
+  0% {
+    opacity: 0.68;
+    transform: scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ai-core__orbit,
+.ai-core__core {
+  transform-box: view-box;
+  transform-origin: center;
+}
+
+.ai-core[data-state="loading"] .ai-core__orbit {
+  animation: aiCoreOrbit 24s linear infinite;
+}
+
+.ai-core[data-state="online"] .ai-core__core {
+  animation: aiCoreOnline 0.72s cubic-bezier(0.16, 1, 0.3, 1) 1;
+}
+
+@keyframes spectralStateOrbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spectral-state__orbit {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.spectral-state[data-state="loading"] .spectral-state__orbit {
+  animation: spectralStateOrbit 3.2s linear infinite;
+}
+
+/* The global hook is a single pointer-inert layer. Motion is phase-driven so
+   business actions never wait for the visual sequence. */
+.spectral-hook {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10050;
+  overflow: visible;
+  pointer-events: none;
+  color: var(--accent-bright);
+}
+
+.spectral-hook__tension,
+.spectral-hook__chain,
+.spectral-hook__hook path,
+.spectral-hook__impact,
+.spectral-hook__break path,
+.spectral-hook__source-lift {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.spectral-hook__tension {
+  stroke: var(--accent);
+  stroke-width: 1;
+  stroke-dasharray: 2 7;
+  opacity: 0;
+}
+
+.spectral-hook__chain {
+  stroke: var(--accent-bright);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-dasharray: 7 5 2 6;
+  opacity: 0;
+}
+
+.spectral-hook__hook path {
+  stroke: var(--accent-bright);
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.spectral-hook__hook {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.spectral-hook__impact {
+  stroke: var(--accent-bright);
+  stroke-width: 1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.spectral-hook__soul {
+  fill: var(--accent-bright);
+  opacity: 0;
+  offset-distance: 100%;
+}
+
+.spectral-hook__break path {
+  stroke: var(--status-danger);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.spectral-hook__break {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.spectral-hook__source-lift {
+  stroke: var(--accent-bright);
+  stroke-width: 1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.spectral-source--fed {
+  animation: spectralSourceFeed 0.44s cubic-bezier(0.16, 1, 0.3, 1) 1;
+}
+
+.spectral-hook[data-phase="charging"] .spectral-hook__source-lift {
+  animation: spectralHookCharge 0.09s ease-out 1 both;
+}
+
+.spectral-hook[data-phase="traveling"] .spectral-hook__chain {
+  opacity: 0.88 !important;
+  animation: spectralHookCast 0.28s cubic-bezier(0.18, 0.7, 0.18, 1) 1 both;
+}
+
+.spectral-hook[data-phase="traveling"] .spectral-hook__hook {
+  opacity: 0.94 !important;
+  animation: spectralHookHead 0.28s cubic-bezier(0.18, 0.7, 0.18, 1) 1 both;
+}
+
+.spectral-hook[data-phase="impact"] .spectral-hook__chain,
+.spectral-hook[data-phase="tension"] .spectral-hook__tension {
+  opacity: 0.62 !important;
+}
+
+.spectral-hook[data-phase="impact"] .spectral-hook__hook,
+.spectral-hook[data-phase="tension"] .spectral-hook__hook {
+  opacity: 0.88 !important;
+}
+
+.spectral-hook[data-phase="impact"] .spectral-hook__impact {
+  animation: spectralHookImpact 0.11s ease-out 1 both;
+}
+
+.spectral-hook[data-phase="tension"][data-dimmed="true"] .spectral-hook__tension,
+.spectral-hook[data-phase="tension"][data-dimmed="true"] .spectral-hook__hook {
+  opacity: 0.12;
+}
+
+.spectral-hook[data-phase="returning"] .spectral-hook__tension {
+  animation: spectralHookRetract 0.36s cubic-bezier(0.55, 0, 0.25, 1) 1 both;
+}
+
+.spectral-hook[data-phase="returning"] .spectral-hook__soul {
+  animation: spectralSoulReturn 0.36s cubic-bezier(0.55, 0, 0.25, 1) 1 both;
+}
+
+.spectral-hook[data-phase="returning"] .spectral-hook__source-lift {
+  animation: spectralHookFeed 0.18s 0.28s ease-out 1 both;
+}
+
+.spectral-hook[data-phase="broken"] .spectral-hook__break {
+  animation: spectralHookBreak 0.3s ease-out 1 both;
+}
+
+@keyframes spectralHookCharge {
+  from { opacity: 0; transform: scale(0.72); }
+  to { opacity: 0.55; transform: scale(1); }
+}
+
+@keyframes spectralHookCast {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes spectralHookHead {
+  from { transform: translate(-8px, -2px) scale(0.78); }
+  to { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes spectralHookImpact {
+  from { opacity: 0.64; transform: scale(0.45); }
+  to { opacity: 0; transform: scale(1.14); }
+}
+
+@keyframes spectralHookRetract {
+  from { opacity: 0.6; stroke-dashoffset: 0; }
+  to { opacity: 0; stroke-dashoffset: -100; }
+}
+
+@keyframes spectralSoulReturn {
+  from { opacity: 0.9; offset-distance: 100%; transform: scale(1); }
+  82% { opacity: 0.82; }
+  to { opacity: 0; offset-distance: 0%; transform: scale(0.45); }
+}
+
+@keyframes spectralHookFeed {
+  from { opacity: 0.55; transform: scale(0.65); }
+  to { opacity: 0; transform: scale(1.2); }
+}
+
+@keyframes spectralHookBreak {
+  from { opacity: 0.7; transform: translate(0, 0) scale(0.85); }
+  to { opacity: 0; transform: translate(8px, -5px) scale(1.12); }
+}
+
+@keyframes spectralSourceFeed {
+  0%, 100% { filter: none; }
+  42% { filter: brightness(1.22); }
+}
+
+/* 文本选择 */
+::selection {
+  background: var(--accent);
+  color: #06171f;
+}
+
+/* 工具类 */
+.text-brand {
+  color: var(--accent);
+}
+
+.bg-brand {
+  background-color: var(--accent);
+}
+
+.border-brand {
+  border-color: var(--accent);
+}
+
+/* 状态徽章 */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge-success {
+  background-color: rgba(85, 184, 156, 0.14);
+  color: var(--status-success);
+}
+
+.status-badge-warning {
+  background-color: rgba(200, 162, 92, 0.14);
+  color: var(--status-warning);
+}
+
+.status-badge-error {
+  background-color: rgba(198, 106, 82, 0.14);
+  color: var(--status-danger);
+}
+
+.status-badge-info {
+  background-color: rgba(32, 208, 202, 0.12);
+  color: var(--accent-bright);
+}
+
+/* 加载状态 */
+.loading-skeleton {
+  background: linear-gradient(90deg,
+    var(--surface-primary) 0%,
+    var(--surface-hover) 50%,
+    var(--surface-primary) 100%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 模态框优化 - 修复遮挡和滚动问题 */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  padding: 1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 42rem; /* max-w-2xl */
+  max-height: 85vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface-primary);
+  border-radius: 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.modal-header {
+  flex-shrink: 0;
+  padding: 2rem 2rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--surface-primary);
+  z-index: 10;
+}
+
+.modal-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 2rem;
+  overscroll-behavior: contain;
+}
+
+.modal-footer {
+  flex-shrink: 0;
+  padding: 1.5rem 2rem 2rem;
+  border-top: 1px solid var(--border-subtle);
+  background-color: var(--surface-primary);
+  z-index: 10;
+}
+
+/* 大模态框 */
+.modal-container-lg {
+  max-width: 64rem; /* max-w-4xl */
+}
+
+/* 自定义弹窗定位 - 上下参考侧边栏中间，左右居中 */
+.modal-overlay-centered {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  padding: 1rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.modal-overlay-centered .modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 42rem;
+  max-height: 85vh;
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface-primary);
+  border-radius: 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+/* The authenticated shell keeps the atmosphere quiet and content-first. */
+.app-shell {
+  position: relative;
+  isolation: isolate;
+  background: var(--bg-app);
+}
+
+.app-shell::before,
+.app-shell::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  z-index: -1;
+  width: 34rem;
+  height: 34rem;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: 0.035;
+}
+
+.app-shell::before {
+  top: -16rem;
+  right: -10rem;
+  background: var(--accent);
+}
+
+.app-shell::after {
+  bottom: -20rem;
+  left: 12rem;
+  background: var(--accent-soft);
+}
+
+/* Compatibility bridge for legacy Tailwind utility text inside dark surfaces. */
+main .text-gray-900,
+main .text-gray-800 {
+  color: var(--text-primary) !important;
+}
+
+main .text-gray-700,
+main .text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+
+main .text-gray-500,
+main .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+main .border-gray-50,
+main .border-gray-100,
+main .border-gray-200 {
+  border-color: var(--border-subtle) !important;
+}
+
+main .bg-gray-50 {
+  background-color: var(--surface-secondary) !important;
+}
+
+main .bg-gray-100 {
+  background-color: var(--surface-hover) !important;
+}
+
+main .bg-gray-300 {
+  background-color: #294248 !important;
+}
+
+main button > div.bg-white {
+  background-color: #dceaea !important;
+}
+
+main .bg-white {
+  background-color: var(--surface-primary) !important;
+}
+
+/* Legacy brand utilities are kept for compatibility but rendered through the
+   spectral palette. Amber utilities remain available for genuine warnings. */
+main [class~="bg-[#FFE815]"],
+main [class~="hover:bg-[#FFE815]"],
+main [class*="from-[#FFE815]"],
+main [class*="to-[#FFD700]"],
+main [class*="to-[#FFC800]"] {
+  background-color: var(--accent) !important;
+  background-image: none !important;
+  color: #07171f !important;
+}
+
+main [class*="shadow-yellow"] {
+  box-shadow: 0 0 18px rgba(32, 208, 202, 0.08) !important;
+}
+
+main [class~="text-[#FFE815]"] {
+  color: var(--accent-bright) !important;
+}
+
+main [class~="bg-[#FFF9C4]"] {
+  background-color: var(--surface-secondary) !important;
+}
+
+main .hover\:bg-gray-50:hover,
+main .hover\:bg-gray-100:hover {
+  background-color: var(--surface-hover) !important;
+}
+
+/* Portal-rendered dialogs and legacy utility-heavy screens sit outside main. */
+body .bg-white {
+  background-color: var(--surface-primary) !important;
+}
+
+body [class*="bg-white/"] {
+  background-color: rgba(25, 51, 55, 0.72) !important;
+}
+
+body .text-gray-900,
+body .text-gray-800 {
+  color: var(--text-primary) !important;
+}
+
+body .text-gray-700,
+body .text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+
+body .text-gray-500,
+body .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+body [class*="from-white"],
+body [class*="to-gray-50"],
+body [class*="from-gray-100"],
+body [class*="to-gray-150"] {
+  background-image: none !important;
+  background-color: var(--surface-primary) !important;
+}
+
+body [class*="bg-[#F7F8FA]"],
+body [class*="bg-[#FAFAFA]"],
+body [class*="bg-white/95"] {
+  background-color: var(--surface-secondary) !important;
+  background-image: none !important;
+}
+
+main input:focus,
+main textarea:focus,
+main select:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(32, 208, 202, 0.14) !important;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 2px;
+}
+
+/* 响应式工具类 */
+@media (max-width: 768px) {
+  .ios-card {
+    border-radius: 16px;
+  }
+
+  .ios-input {
+    font-size: 16px; /* 防止iOS自动缩放 */
+  }
+
+  .modal-container {
+    max-width: calc(100% - 2rem);
+    max-height: 90vh;
+    border-radius: 1.5rem;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .ai-core__orbit,
+  .ai-core__core,
+  .spectral-state__orbit,
+  .spectral-hook *,
+  .spectral-source--fed {
+    animation: none !important;
+  }
+
+  .spectral-hook[data-phase="impact"] .spectral-hook__impact,
+  .spectral-hook[data-phase="returning"] .spectral-hook__source-lift,
+  .spectral-hook[data-phase="broken"] .spectral-hook__break {
+    opacity: 0.24;
+  }
+}
