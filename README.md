@@ -81,7 +81,7 @@ AI 回复、议价与运营复盘
 
 ## 技术架构
 
-\`\`\`text
+```text
 ┌─────────────────────────────────────────────┐
 │ React + TypeScript + Vite + Tailwind CSS    │
 │ Recharts · Axios · lucide-react              │
@@ -96,7 +96,7 @@ AI 回复、议价与运营复盘
 │ SQLite · Playwright · Asyncio                │
 │ 闲鱼会话、数据持久化与浏览器自动化           │
 └─────────────────────────────────────────────┘
-\`\`\`
+```
 
 ## 快速开始
 
@@ -109,30 +109,30 @@ AI 回复、议价与运营复盘
 
 ### 1. 安装后端依赖
 
-\`\`\`powershell
+```powershell
 python -m venv .venv
-.\\.venv\\Scripts\\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 playwright install chromium
-\`\`\`
+```
 
 ### 2. 安装并构建前端
 
-\`\`\`powershell
+```powershell
 cd frontend
 pnpm install
 pnpm run build
 cd ..
-\`\`\`
+```
 
-构建产物会写入项目根目录的 \`static/\`，由后端统一提供。
+构建产物会写入项目根目录的 `static/`，由后端统一提供。
 
 ### 3. 启动应用
 
-\`\`\`powershell
+```powershell
 python Start.py
-\`\`\`
+```
 
 打开 <http://localhost:8080>，首次使用按页面提示注册并登录。后端健康检查地址为 <http://localhost:8080/health>。
 
@@ -140,44 +140,71 @@ python Start.py
 
 需要修改 React 界面时，可以让后端和 Vite 分别运行：
 
-\`\`\`powershell
+```powershell
 # 终端 1：项目根目录
 python Start.py
 
 # 终端 2：frontend 目录
 cd frontend
 pnpm run dev
-\`\`\`
+```
 
-开发服务器默认地址为 <http://localhost:3000>，API 请求会代理到 \`http://localhost:8080\`。
+开发服务器默认地址为 <http://localhost:3000>，API 请求会代理到 `http://localhost:8080`。
 
-### Docker（可选）
+### 推荐：Docker 一键运行
 
-\`\`\`powershell
+安装 [Docker Desktop](https://www.docker.com/products/docker-desktop/) 后，不需要安装 Python、Node.js、pnpm 或 Playwright。项目会在镜像构建阶段自动安装后端依赖、构建前端并准备 Chromium。
+
+```powershell
+# 在项目根目录执行
 docker compose up -d --build
-\`\`\`
+```
 
-默认映射端口为 \`8080\`。数据库、日志和备份目录通过 Compose volume 持久化。
+启动完成后访问 <http://localhost:8080>。默认映射端口为 `8080`，也可以通过 `WEB_PORT` 覆盖。
+
+常用命令：
+
+```powershell
+# 查看容器和健康状态
+docker compose ps
+
+# 查看实时日志
+docker compose logs -f seshi-app
+
+# 停止服务（不会删除 data、logs、backups）
+docker compose down
+
+# 更新代码后重新构建
+docker compose up -d --build
+```
+
+`data/`、`logs/` 和 `backups/` 会映射到项目目录并持久化。首次打开页面后，按页面提示注册并登录；如果部署在公网，请先修改 Compose 中的 `ADMIN_PASSWORD`、`JWT_SECRET_KEY` 等默认值。
+
+国内网络环境也可以使用：
+
+```powershell
+docker compose -f docker-compose-cn.yml up -d --build
+```
 
 ## 配置与数据安全
 
-- 运行时数据库位于 \`data/\`，日志位于 \`logs/\`，这些内容不会被提交到仓库。
+- 运行时数据库位于 `data/`，日志位于 `logs/`，这些内容不会被提交到仓库。
 - 不要把 Cookie、API Key、JWT 密钥或真实买家信息写入 Git。
-- 生产环境请修改管理员密码、\`JWT_SECRET_KEY\` 和其他敏感配置。
+- 生产环境请修改管理员密码、`JWT_SECRET_KEY` 和其他敏感配置。
 - 使用自动回复、自动发货和浏览器自动化前，请确认账号权限、数据来源及平台规则。
 
 ## 本地检查
 
-\`\`\`powershell
+```powershell
 cd frontend
 pnpm test
 pnpm exec tsc --noEmit
 pnpm run build
-\`\`\`
+```
 
 ## 项目状态
 
-当前版本聚焦于核心运营闭环：账号 → 商品/卡密 → 规则 → 订单 → 发货，以及 AI 回复与本地模型调试。视觉层使用 \`frontend/components/brand/\` 中的 \`SeshiMark\`、\`SpectralBackdrop\`、\`AICore\` 和 \`SpectralHook\` 组件统一品牌语言。
+当前版本聚焦于核心运营闭环：账号 → 商品/卡密 → 规则 → 订单 → 发货，以及 AI 回复与本地模型调试。视觉层使用 `frontend/components/brand/` 中的 `SeshiMark`、`SpectralBackdrop`、`AICore` 和 `SpectralHook` 组件统一品牌语言。
 
 ## 使用边界
 

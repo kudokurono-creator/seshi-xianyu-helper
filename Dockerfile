@@ -57,12 +57,12 @@ COPY --from=frontend-builder /static ./static
 FROM base AS runtime
 
 # 设置标签信息
-LABEL maintainer="zhinianboke" \
-      version="2.2.0" \
-      description="闲鱼自动回复系统 - 企业级多用户版本，支持自动发货和免拼发货" \
-      repository="https://github.com/zhinianboke/xianyu-auto-reply" \
-      license="仅供学习使用，禁止商业用途" \
-      author="zhinianboke" \
+LABEL maintainer="kudokurono-creator" \
+      version="1.0.0" \
+      description="seshi 闲鱼助手 - AI 智能发货运营控制台" \
+      repository="https://github.com/kudokurono-creator/seshi-xianyu-helper" \
+      license="MIT" \
+      author="kudokurono-creator" \
       build-date="" \
       vcs-ref=""
 

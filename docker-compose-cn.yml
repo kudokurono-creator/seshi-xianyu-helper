@@ -1,10 +1,10 @@
 services:
-  xianyu-app:
+  seshi-app:
     build:
       context: .
       dockerfile: Dockerfile-cn
-    image: xianyu-auto-reply:latest
-    container_name: xianyu-auto-reply
+    image: seshi-xianyu-helper:latest
+    container_name: seshi-xianyu-helper
     restart: unless-stopped
     # 使用root用户避免权限问题
     user: "0:0"
@@ -14,7 +14,7 @@ services:
       # 数据持久化
       - ./data:/app/data:rw
       - ./logs:/app/logs:rw
-      - ./global_config.yml:/app/global_config.yml:ro
+      - ./global_config.yml:/app/global_config.yml:rw
       # 可选：如果需要自定义配置
       # - ./custom_config.yml:/app/global_config.yml:ro
       # 可选：备份目录
@@ -79,7 +79,7 @@ services:
   # 可选：添加Nginx反向代理
   nginx:
     image: nginx:alpine
-    container_name: xianyu-nginx
+    container_name: seshi-xianyu-nginx
     restart: unless-stopped
     ports:
       - "80:80"
@@ -88,7 +88,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/ssl:/etc/nginx/ssl:ro
     depends_on:
-      - xianyu-app
+      - seshi-app
     networks:
       - xianyu-network
     profiles:
